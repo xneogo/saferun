@@ -17,10 +17,10 @@
  @Time    : 2025/4/15 -- 14:40
  @Author  : 亓官竹 ❤️ MONEY
  @Copyright 2025 亓官竹
- @Description: safefun /safe.go 给运行的函数f封装，避免panic导致全局退出
+ @Description: saferun /safe.go 给运行的函数f封装，避免panic导致全局退出
 */
 
-package safefun
+package saferun
 
 import (
 	"fmt"

@@ -1,4 +1,4 @@
-package safefun
+package saferun
 
 import "fmt"
 
