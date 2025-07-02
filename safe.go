@@ -23,12 +23,17 @@
 package saferun
 
 import (
+	"context"
 	"fmt"
 	"runtime"
 )
 
-// WrapperWithArgs 带参数函数 wrapper
-func WrapperWithArgs(f func(args ...interface{}), args ...interface{}) (err error) {
+type RunFn func() error
+type RunArgsFn func(args ...interface{}) error
+
+// SafeGoWithArgs 带参数函数
+// f 内部需要对 [interface] 做反解才可以使用
+func SafeGoWithArgs(f RunArgsFn, args ...interface{}) (err error) {
 
 	defer func() {
 		if p := recover(); p != nil {
@@ -36,12 +41,11 @@ func WrapperWithArgs(f func(args ...interface{}), args ...interface{}) (err erro
 		}
 	}()
 
-	f(args...)
-	return
+	return f(args...)
 }
 
-// Wrapper 无参数 wrapper
-func Wrapper(f func()) (err error) {
+// SafeGo 无参数
+func SafeGo(ctx context.Context, f RunFn) (err error) {
 
 	defer func() {
 		if p := recover(); p != nil {
@@ -49,8 +53,7 @@ func Wrapper(f func()) (err error) {
 		}
 	}()
 
-	f()
-	return
+	return f()
 }
 
 func DumpStack(e interface{}) (err error) {
